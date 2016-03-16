@@ -17,7 +17,7 @@ public class ContactModificationGroup extends TestBase {
             app.getContactHelper().createContact(new ContactData("Anastasia", "G", "Neznamova", "NeZnaa", "Spb", "9213000000", "anastasia@emc.com", "test1"));
         }
 
-        app.getContactHelper().initContactModification();
+        app.getContactHelper().initContactModification(before - 1);
         app.getContactHelper().fillContactForm(new ContactData("Anastasia", "G", "Neznamova", "NeZnaa", "Spb", "9213000000", "anastasia@emc.com", null), false);
         app.getContactHelper().submitContactModification();
         app.getContactHelper().returnToContactList();
