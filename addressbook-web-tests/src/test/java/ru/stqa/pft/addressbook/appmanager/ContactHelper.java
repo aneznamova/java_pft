@@ -3,11 +3,16 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by neznaa on 3/4/2016.
@@ -44,7 +49,7 @@ public class ContactHelper  extends HelperBase {
     }
 
     public void initContactModification(int index) {
-        wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).get(index).click();
+        click(By.xpath(".//*[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 
     public void submitContactModification() {
@@ -81,5 +86,17 @@ public class ContactHelper  extends HelperBase {
 
     public int getContactCount() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> elements = wd.findElements(By.name("selected[]"));
+        for(WebElement element : elements) {
+            String name = element.getText();
+            ContactData contact =  new ContactData(name, null, null, null, null, null, null, null);
+            contacts.add(contact);
+        }
+
+        return contacts;
     }
 }
