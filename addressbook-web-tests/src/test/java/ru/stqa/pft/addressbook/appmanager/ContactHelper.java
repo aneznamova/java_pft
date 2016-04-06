@@ -72,11 +72,32 @@ public class ContactHelper  extends HelperBase {
         return isElementPresent(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         initContactCreation();
         fillContactForm(contact, true);
         submitContactForm();
         returnToContactList();
+    }
+
+    public void modify(ContactData contact, int index) {
+        initContactModification(index);
+        fillContactForm(contact, false);
+        submitContactModification();
+        returnToContactList();
+    }
+
+    public void delete(int index) {
+        selectContact(index);
+        deleteSelectedContact();
+        confirmDeletionContact();
+        returnToHome();
+    }
+
+    public void returnToHome() {
+        if (isElementPresent(By.id("maintable"))) {
+            return;
+        }
+        click(By.linkText("home"));
     }
 
     public void returnToContactList() {
@@ -88,7 +109,7 @@ public class ContactHelper  extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for(WebElement element : elements) {
