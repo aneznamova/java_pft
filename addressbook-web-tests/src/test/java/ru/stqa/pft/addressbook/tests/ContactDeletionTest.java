@@ -13,10 +13,9 @@ import java.util.List;
 public class ContactDeletionTest extends TestBase {
     @BeforeMethod
     public void ensurePrecondition() {
-        if (app.contact().list().size() == 0) {
-
-            app.contact().create(new ContactData("Anastasia", "G", "Neznamova", "NeZnaa", "Spb", "9213000000", "anastasia@emc.com", "test1"));
-        }
+        if (app.contact().list().size() == 0) app.contact().create(new ContactData()
+                .withFirstname("Anastasia").withMiddle("G").withLastname("Neznamova").withNickname("NeZnaa")
+                .withAddress("Spb").withMobile("9213000000").withEmail("anastasia@emc.com").withGroup("test1"));
     }
 
     @Test
