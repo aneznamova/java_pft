@@ -12,7 +12,9 @@ import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by neznaa on 3/4/2016.
@@ -48,7 +50,7 @@ public class ContactHelper  extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void initContactModification(int index) {
+    public void initContactModification() {
         click(By.xpath(".//*[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 
@@ -58,6 +60,10 @@ public class ContactHelper  extends HelperBase {
 
     public void selectContact(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
+    }
+
+    public void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
     }
 
     public void deleteSelectedContact() {
@@ -79,8 +85,8 @@ public class ContactHelper  extends HelperBase {
         returnToContactList();
     }
 
-    public void modify(ContactData contact, int index) {
-        initContactModification(index);
+        public void modify(ContactData contact) {
+        initContactModification();
         fillContactForm(contact, false);
         submitContactModification();
         returnToContactList();
@@ -88,6 +94,13 @@ public class ContactHelper  extends HelperBase {
 
     public void delete(int index) {
         selectContact(index);
+        deleteSelectedContact();
+        confirmDeletionContact();
+        returnToHome();
+    }
+
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         deleteSelectedContact();
         confirmDeletionContact();
         returnToHome();
@@ -122,4 +135,20 @@ public class ContactHelper  extends HelperBase {
 
         return contacts;
     }
+
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<ContactData>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for(WebElement element : elements) {
+            List<WebElement> cells = element.findElements(By.tagName("td"));
+            String lastname = cells.get(1).getText();
+            String firstname = cells.get(2).getText();
+            int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
+            contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
+        }
+
+        return contacts;
+    }
+
+
 }
