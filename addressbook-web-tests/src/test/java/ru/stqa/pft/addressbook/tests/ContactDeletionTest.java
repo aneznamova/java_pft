@@ -1,15 +1,13 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Created by neznaa on 3/6/2016.
