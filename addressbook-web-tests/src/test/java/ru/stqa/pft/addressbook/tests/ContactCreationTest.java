@@ -18,8 +18,8 @@ public class ContactCreationTest extends TestBase {
                 .withFirstname("Anastasia").withMiddle("G").withLastname("Neznamova").withNickname("NeZnaa")
                 .withAddress("Spb").withMobile("9213000000").withEmail("anastasia@emc.com").withGroup("test1");
         app.contact().create(contact);
+        assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.contact().all();
-        assertThat(after.size(), equalTo(before.size() + 1));
         assertThat(after, CoreMatchers.equalTo(
                 before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
 
