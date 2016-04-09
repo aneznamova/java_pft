@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import com.sun.javafx.binding.StringFormatter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +7,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,10 +152,10 @@ public class ContactHelper  extends HelperBase {
             List<WebElement> cells = row.findElements(By.tagName("td"));
             String lastname = cells.get(1).getText();
             String firstname = cells.get(2).getText();
-            String[] phones = cells.get(5).getText().split("\n");
+            String allPhones = cells.get(5).getText();
             int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
             contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
-                    .withHomephone(phones[0]).withMobilephone(phones[1]).withWorkphone(phones[2]));
+                    .withAllPhones(allPhones));
         }
 
         return new Contacts(contactCache);
