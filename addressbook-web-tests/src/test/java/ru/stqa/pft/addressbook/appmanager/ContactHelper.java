@@ -165,12 +165,12 @@ public class ContactHelper  extends HelperBase {
 
 
     public ContactData infoFromEditForm(ContactData contact) {
-        initContactModification();
+        initContactModificationByID(contact.getId());
         String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
         String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
-        String home = wd.findElement(By.name("home")).getAttribute("value");
-        String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
-        String work = wd.findElement(By.name("work")).getAttribute("value");
+        String home = wd.findElement(By.name("home")).getAttribute("value").replaceAll("[-()]","").replaceAll("\\s", "");
+        String mobile = wd.findElement(By.name("mobile")).getAttribute("value").replaceAll("[-()]","").replaceAll("\\s", "");
+        String work = wd.findElement(By.name("work")).getAttribute("value").replaceAll("[-()]","").replaceAll("\\s", "");
         String email = wd.findElement(By.name("email")).getAttribute("value");
         String email2 = wd.findElement(By.name("email2")).getAttribute("value");
         String email3 = wd.findElement(By.name("email3")).getAttribute("value");
@@ -181,5 +181,31 @@ public class ContactHelper  extends HelperBase {
                 .withEmail(email).withEmail2(email2).withEmail3(email3);
 
 
+    }
+
+    public ContactData infoFromDetailsForm(ContactData contact) {
+        initContactDetails(contact.getId());
+        String allDetails = wd.findElement(By.id("content")).getText();
+        String[] details = allDetails.split("\n");
+        String firstname = details[0].replaceAll(" .+", "");
+        String lastname = details[0].replaceAll(".+ ", "");
+        String address = details[1];
+        String home = details[3].replaceAll("H: ", "").replaceAll("[-()]","").replaceAll("\\s", "");
+        String mobile = details[4].replaceAll("M: ", "").replaceAll("[-()]","").replaceAll("\\s", "");
+        String work = details[5].replaceAll("W: ", "").replaceAll("[-()]","").replaceAll("\\s", "");
+        String email = details[7].replaceAll(" \\(.+\\)", "");
+        String email2 = details[8].replaceAll(" \\(.+\\)", "");
+        String email3 = details[9].replaceAll(" \\(.+\\)", "");
+              //  .replaceAll("(Member of.*|Notice:.*|test.*|[WMH]: | \\(www.*\\))", "")
+               // .replaceAll("\\s", "").replaceAll("[-()]", "")
+               // .replaceAll("\n+", "\n");
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
+                .withAddress(address).withHomephone(home).withMobilephone(mobile)
+                .withWorkphone(work).withEmail(email).withEmail2(email2).withEmail3(email3);
+    }
+
+    private void initContactDetails(int id) {
+        wd.findElement((By.cssSelector(String.format("a[href='view.php?id=%s']", id)))).click();
     }
 }
