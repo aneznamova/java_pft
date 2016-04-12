@@ -6,7 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.io.File;
 @XStreamAlias("contact")
 public class ContactData {
-    @XStreamOmitField
+    //@XStreamOmitField
     private int id = Integer.MAX_VALUE;
     private String firstname;
     private String middle;
