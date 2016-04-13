@@ -6,6 +6,6 @@
             <class name="ru.stqa.pft.addressbook.tests.ContactCreationTest"/>
             <class name="ru.stqa.pft.addressbook.tests.ContactModificationTest"/>
             <class name="ru.stqa.pft.addressbook.tests.ContactDeletionTest"/>
-            </classes>
+        </classes>
     </test>
 </suite>
