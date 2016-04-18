@@ -2,35 +2,87 @@ package ru.stqa.pft.addressbook.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
+
+@Entity
+@Table(name = "addressbook")
 @XStreamAlias("contact")
 public class ContactData {
     //@XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
+
+    @Column(name = "firstname")
     private String firstname;
+
+    @Transient
     private String middle;
+
+    @Column(name = "lastname")
     private String lastname;
+
+    @Transient
     private String nickname;
+
+    @Transient
     private String address;
+
+    @Column(name = "home")
+    @Type(type = "text")
     private String homephone;
+
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobilephone;
+
+    @Column(name = "work")
+    @Type(type = "text")
     private String workphone;
+
+    @Transient
     private String email;
+
+    @Transient
     private String email2;
+
+    @Transient
     private String email3;
+
+    @Transient
     private String group;
+
+    @Transient
     private String allPhones;
+
+    @Transient
     private String allEmails;
+
+    @Transient
     private String allDetails;
-    private File photo;
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
+
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -178,14 +230,6 @@ public class ContactData {
         return id;
     }
 
-
-
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "id=" + id +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
