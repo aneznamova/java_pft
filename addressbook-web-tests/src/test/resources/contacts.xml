@@ -8,21 +8,6 @@
     <mobilephone>2222</mobilephone>
     <workphone>7777</workphone>
     <email>test@test.ru</email>
-    <email2>test@test.ru</email2>
-    <email3>test@test.ru</email3>
-    <group>test1</group>
-  </contact>
-  <contact>
-    <id>2147483647</id>
-    <firstname>Firstname 1</firstname>
-    <lastname>Lastname 1</lastname>
-    <address>Test Address 1</address>
-    <homephone>6666</homephone>
-    <mobilephone>2222</mobilephone>
-    <workphone>7777</workphone>
-    <email>test@test.ru</email>
-    <email2>test@test.ru</email2>
-    <email3>test@test.ru</email3>
     <group>test1</group>
   </contact>
 </list>
