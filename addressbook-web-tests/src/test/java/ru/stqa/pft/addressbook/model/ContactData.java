@@ -1,45 +1,56 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
 @XStreamAlias("contact")
 public class ContactData {
     //@XStreamOmitField
+    @Expose
     @Id
     @Column(name = "id")
     private int id = Integer.MAX_VALUE;
 
+    @Expose
     @Column(name = "firstname")
     private String firstname;
 
     @Transient
     private String middle;
 
+    @Expose
     @Column(name = "lastname")
     private String lastname;
 
     @Transient
     private String nickname;
 
+    @Expose
     @Column(name = "address")
     @Type(type = "text")
     private String address;
 
+    @Expose
     @Column(name = "home")
     @Type(type = "text")
     private String homephone;
 
+    @Expose
     @Column(name = "mobile")
     @Type(type = "text")
     private String mobilephone;
 
+    @Expose
     @Column(name = "work")
     @Type(type = "text")
     private String workphone;
@@ -57,8 +68,11 @@ public class ContactData {
 
     private String email3;
 
-    @Transient
-    private String group;
+    @XStreamOmitField
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
     @Transient
     private String allPhones;
@@ -132,6 +146,10 @@ public class ContactData {
     public ContactData withAllEmails(String allEmails) {
         this.allEmails = allEmails;
         return this;
+    }
+
+    public Groups getGroups() {
+        return new Groups(groups);
     }
 
     public String getAllPhones() {
@@ -211,12 +229,7 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
-    public String getFirstname() {
+   public String getFirstname() {
         return firstname;
     }
 
@@ -236,6 +249,7 @@ public class ContactData {
         return address;
     }
 
+
     public String getHomephone() {
         return homephone;
     }
@@ -252,13 +266,13 @@ public class ContactData {
         return email;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
     public int getId() {
         return id;
     }
 
 
+    public ContactData inGroup(GroupData group) {
+        groups.add(group);
+        return this;
+    }
 }
