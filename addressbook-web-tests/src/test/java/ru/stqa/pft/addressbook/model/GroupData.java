@@ -3,8 +3,6 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import org.hibernate.annotations.Entity;
-import org.hibernate.annotations.Table;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
