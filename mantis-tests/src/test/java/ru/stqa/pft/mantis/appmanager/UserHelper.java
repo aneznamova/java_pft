@@ -17,7 +17,7 @@ public class UserHelper extends HelperBase {
         super(app);
     }
 
-    public void registerNewUser(UserData user) throws IOException, MessagingException {
+    public void registerUser(UserData user) throws IOException, MessagingException {
         String username = user.getUsername();
         String password = user.getPassword();
         String email = user.getEmail();
@@ -43,7 +43,7 @@ public class UserHelper extends HelperBase {
         initManageUserByName(user);
         click(By.cssSelector("input[value='Reset Password']"));
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
-        String confirmationLink = app.mail().findChangePasswordLink(mailMessages, user.getEmail());
+        String confirmationLink = app.mail().findResetPasswordLink(mailMessages, user.getEmail());
         wd.get(confirmationLink);
         type(By.name("password"), newPassword);
         type(By.name("password_confirm"), newPassword);

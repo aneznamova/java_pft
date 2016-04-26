@@ -44,15 +44,6 @@ public class UserData {
         return email;
     }
 
-    @Override
-    public String toString() {
-        return "UserData{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
     public UserData withId(int id) {
         this.id = id;
         return this;
@@ -74,6 +65,15 @@ public class UserData {
     }
 
     @Override
+    public String toString() {
+        return "UserData{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -83,7 +83,6 @@ public class UserData {
         if (id != userData.id) return false;
         if (username != null ? !username.equals(userData.username) : userData.username != null) return false;
         return !(email != null ? !email.equals(userData.email) : userData.email != null);
-
     }
 
     @Override

@@ -24,7 +24,6 @@ public class DbHelper {
                 .build();
 
             sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
-
     }
 
     public Users users() {

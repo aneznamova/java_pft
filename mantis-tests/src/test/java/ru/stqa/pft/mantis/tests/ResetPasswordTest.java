@@ -30,7 +30,7 @@ public class ResetPasswordTest extends TestBase {
                 app.user().uiLogin("administrator", "root");
                 app.user().resetPassword(user, newPassword);
                 assertTrue(app.newSession().login(user.getUsername(), newPassword));
-                break;
+                return;
             }
     }
 
